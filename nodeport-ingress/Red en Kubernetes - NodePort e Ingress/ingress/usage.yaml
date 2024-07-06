@@ -1,0 +1,67 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: uno
+  labels:
+    app: uno
+spec:
+  containers:
+  - image: gcr.io/google-samples/hello-app:1.0
+    name: uno
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: uno-service
+spec:
+  selector:
+    app: uno
+  ports:
+  - port: 8080
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: dos
+  labels:
+    app: dos
+spec:
+  containers:
+  - image: gcr.io/google-samples/hello-app:2.0
+    name: dos
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: dos-service
+spec:
+  selector:
+    app: dos
+  ports:
+  - port: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /uno
+        backend:
+          service:
+            name: uno-service
+            port:
+              number: 8080
+      - pathType: Prefix
+        path: /dos
+        backend:
+          service:
+            name: dos-service
+            port:
+              number: 8080
+---
