@@ -1,4 +1,3 @@
-# lectura y escritura
 class Task:
     def __init__(self, title, description):
         self.title = title

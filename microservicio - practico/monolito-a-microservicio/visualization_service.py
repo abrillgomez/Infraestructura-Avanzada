@@ -1,4 +1,3 @@
-# solo lectura
 class TaskViewer:
     def __init__(self, task_manager):
         self.task_manager = task_manager
