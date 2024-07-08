@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+  - name : Creo una ec2
+    ec2_instance:
+      count: 2
+      name: prueba
+      region: us-east-2
+      image_id: ami-0cf0e376c672104d6
+      instance_type: t2.micro
+      state: absent
